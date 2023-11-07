@@ -21,7 +21,7 @@ public class Route {
     public Route(Point origine, Point destination) {
         this.origine = origine;
         this.destination = destination;
-        this.distance = Math.sqrt(Math.pow(destination.getAbscisse()- origine.getAbscisse(),2)+Math.pow(destination.getOrdonnee()- origine.getOrdonnee(),2));
+        this.distance = Math.sqrt(Math.pow(destination.getAbscisse() - origine.getAbscisse(),2)+Math.pow(destination.getOrdonnee() - origine.getOrdonnee(),2));
     }
 
     /**
