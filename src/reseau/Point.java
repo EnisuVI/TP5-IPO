@@ -4,19 +4,23 @@ public class Point {
     /**
      * représente l'identifiant unique du client
      */
-    public int idClient;
+    private int idClient;
     /**
      * abscisse à laquelle se situe le client
      */
-    public float abscisse;
+    private float abscisse;
     /**
      * ordonnée à laquelle se situe le client
      */
-    public float ordonnee;
+    private float ordonnee;
+
+    private static int dernierId = 0;
 
     public Point(float abscisse, float ordonnee) {
         this.abscisse = abscisse;
         this.ordonnee = ordonnee;
+        this.idClient = dernierId;
+        dernierId++;
     }
 
     /**
