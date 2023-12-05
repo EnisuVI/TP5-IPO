@@ -1,32 +1,32 @@
 package reseau;
 
-public class Route {
-    /**
-     * point de départ
-     */
-    private Point origine;
-    /**
-     * point d'arrivée
-     */
-    private Point destination;
+import java.util.Objects;
 
-    /**
-     * distance qui sépare les deux points
-     */
+/**
+ * Created by Desnyder Rémi
+ * Date: 07/11/2023
+ */
+
+public class Route {
+
+    private Point origine;
+    private Point destination;
     private double distance;
 
-    /**
-     * constructeur par données
-     */
     public Route(Point origine, Point destination) {
         this.origine = origine;
         this.destination = destination;
-        this.distance = Math.sqrt(Math.pow(destination.getAbscisse() - origine.getAbscisse(),2)+Math.pow(destination.getOrdonnee() - origine.getOrdonnee(),2));
+
+        if (origine.equals(destination)) {
+            this.distance = 0;
+        } else if(origine == null || destination == null) {
+            this.distance = -1;
+        } else {
+            this.distance = Math.sqrt(Math.pow(destination.getAbscisse() - origine.getAbscisse(), 2) + Math.pow(destination.getOrdonnee() - origine.getOrdonnee(), 2));
+        }
+
     }
 
-    /**
-     * getters
-     */
     public Point getOrigine() {
         return origine;
     }
@@ -39,21 +39,6 @@ public class Route {
         return distance;
     }
 
-    /**
-     * setters
-     */
-    public void setOrigine(Point origine) {
-        this.origine = origine;
-    }
-
-    public void setDestination(Point destination) {
-        this.destination = destination;
-    }
-
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
-
     @Override
     public String toString() {
         return "Route{" +
@@ -63,20 +48,29 @@ public class Route {
                 '}';
     }
 
-    public static void main(String[] args) {
-        Point p1 = new Point(1,3);
-        Point p2 = new Point(3,5);
-        Point p3 = new Point(6, 2);
-        Point p4 = new Point(12, 10);
-
-        Route r1 = new Route(p1,p2);
-        Route r2 = new Route(p2,p4);
-        Route r3 = new Route(p4,p1);
-        Route r4 = new Route(p1,p3);
-
-        System.out.println(r1);
-        System.out.println(r2);
-        System.out.println(r3);
-        System.out.println(r4);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Route route = (Route) o;
+        return Double.compare(distance, route.distance) == 0 && Objects.equals(origine, route.origine) && Objects.equals(destination, route.destination);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(origine, destination, distance);
+    }
+
+    public static void main(String[] args) {
+        Point p1 = new Point(1, 2);
+        Point p2 = new Point(3, 4);
+        Point p3 = new Point(-5, 6);
+        Route r1 = new Route(p1, p2);
+        Route r2 = new Route(p2, p3);
+        Route r3 = new Route(p3, p1);
+        System.out.println(r1.toString());
+        System.out.println(r2.toString());
+        System.out.println(r3.toString());
+    }
+
 }
