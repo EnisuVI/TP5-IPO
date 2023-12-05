@@ -7,6 +7,7 @@ import reseau.Depot;
 import reseau.Point;
 import reseau.Route;
 
+import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,6 +49,46 @@ public class Routage {
             point.ajouterRoutes(mesPoints);
         }
 
+    }
+
+    public void ecriturePlanning(String fichier){
+        //Quand on précise rien, c'est forcément public void
+        PrintWriter writer;
+        try{
+            writer = new PrintWriter(fichier);
+            writer.println(this.planning);
+            writer.close();
+        }
+        catch (FileNotFoundException ex){
+            System.out.println("Erreur à la création du fichier");
+        }
+    }
+
+    public void traitementLigne(String ligne){
+        System.out.println(ligne);
+    }
+
+    public void lectureClient(String fichierEntree){
+        FileReader reader;
+        BufferedReader lineReader;
+        try{
+            reader = new FileReader(fichierEntree);
+            lineReader = new BufferedReader(reader);
+            String ligne = lineReader.readLine();
+
+            while(ligne != null) {
+                traitementLigne(ligne);
+                ligne = lineReader.readLine();
+            }
+            lineReader.close();
+            reader.close();
+        }
+        catch(FileNotFoundException ex){
+            System.out.println("Erreur : fichier introuvable");
+        }
+        catch (IOException ex){
+            System.out.println("Erreur en entrée/sortie");
+        }
     }
 
     public void planificationBasique(){
@@ -98,13 +139,13 @@ public class Routage {
         routage.creationClientsTest1();
         routage.intialiserRoutes();
         routage.planificationBasique();
+        routage.ecriturePlanning("listeClients.txt");
+        routage.lectureClient("nom.txt");
+        //System.out.println(routage);
     }
     public static void main(String[] args) {
-        Routage r1 = new Routage(345);
-        r1.test();
-        System.out.println(r1);
+        test();
     }
-
 
 }
 
